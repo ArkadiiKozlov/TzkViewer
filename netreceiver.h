@@ -16,6 +16,7 @@ class NetReceiver : public QObject
         
     public slots:
         void ReceivePacket (void);
+        
     private:
         udp_crtc *udp_o;
         

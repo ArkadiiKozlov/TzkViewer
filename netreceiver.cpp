@@ -16,7 +16,11 @@ void NetReceiver::ReceivePacket(void)
         if (size) {
         
             if (ts->key == 1) {// key
-                emit SendStringToMain(ts->name);
+                QString q_str = ts->name;
+                q_str.append (" size: ");
+                //q_str.append (QString().arg((ushort)*(ts->name +strlen(ts->name) + 1),0,10));
+                q_str.append (QString("%1").arg((ushort)*(ts->name +strlen(ts->name) + 1),0,10));
+                emit SendStringToMain(q_str);
                 //pthread_mutex_lock(&mutex);            
                 //channel_name_q.push(ts->name);
                 //pthread_mutex_unlock(&mutex);            

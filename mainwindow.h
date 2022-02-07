@@ -18,7 +18,8 @@ class MainWindow : public QMainWindow
 {
         Q_OBJECT
     public slots:
-       void RecChannelName (QString);         
+       void RecChannelName (QString);
+       void TestSlot (QTableWidgetItem *item);       
         
     public:
         MainWindow(QWidget *parent = nullptr);
@@ -29,7 +30,6 @@ class MainWindow : public QMainWindow
         Ui::MainWindow *ui;        
         QThread net_rec_thr;
         pthread_mutex_t mutex;        
-        QTableWidgetItem *item00;        
         map <string, int> chann_to_num; 
 };
 #endif // MAINWINDOW_H

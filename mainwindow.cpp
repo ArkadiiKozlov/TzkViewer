@@ -24,7 +24,7 @@ MainWindow::MainWindow(QWidget *parent)
     connect (&net_rec_thr, &QThread::started, n_r, &NetReceiver::ReceivePacket);        
     net_rec_thr.start();
     
-
+    connect (ui->tableWidget, &QTableWidget::itemClicked, this, &MainWindow::TestSlot);
 }
 void MainWindow::RecChannelName (QString _q_str) 
 {
@@ -63,13 +63,16 @@ void MainWindow::RecChannelName (QString _q_str)
   }
   
   
-  
-  
+   
   //int num  = item->text().toInt();
   //msg_counter++;
-    
-  
+      
   ui->tableWidget->viewport()->update();
+}
+
+void MainWindow::TestSlot(QTableWidgetItem *item) 
+{
+    qDebug () << "Item clicked" << " " << item->text();
 }
 
 MainWindow::~MainWindow()
