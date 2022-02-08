@@ -6,7 +6,8 @@
 #include <queue>
 #include <string>
 #include <qtablewidget.h>
-
+#include <thread>
+#include "./lan.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -18,7 +19,7 @@ class MainWindow : public QMainWindow
 {
         Q_OBJECT
     public slots:
-       void RecChannelName (QString);
+       void RecChannelName (PacketTS *);
        void TestSlot (QTableWidgetItem *item);       
         
     public:
@@ -28,8 +29,7 @@ class MainWindow : public QMainWindow
         void ReceivePacket(void);      
     private:
         Ui::MainWindow *ui;        
-        QThread net_rec_thr;
-        pthread_mutex_t mutex;        
+        QThread net_rec_thr;        
         map <string, int> chann_to_num; 
 };
 #endif // MAINWINDOW_H

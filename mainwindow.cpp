@@ -1,16 +1,23 @@
+#include <QDebug>
+#include <QTime>
 #include "mainwindow.h"
 #include "./ui_mainwindow.h"
 #include "netreceiver.h"
-#include <QDebug>
+
+
+pthread_mutex_t mutex_here = PTHREAD_MUTEX_INITIALIZER;
+
+int abc = 5;
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
     , ui(new Ui::MainWindow)
 {
-    ui->setupUi(this);    
+    ui->setupUi(this);        
+    
     QTableWidgetItem *item_t;
-    for (int i=0; i < ui->tableWidget->rowCount(); i++) {
-        for (int j=0; j < ui->tableWidget->columnCount(); j++) {
+    for (int i = 0; i < ui->tableWidget->rowCount(); i++) {
+        for (int j = 0; j < ui->tableWidget->columnCount(); j++) {
             item_t = new QTableWidgetItem (i);
             item_t->setBackgroundColor(Qt::gray);
             ui->tableWidget->setItem(i,j, item_t);
@@ -26,9 +33,14 @@ MainWindow::MainWindow(QWidget *parent)
     
     connect (ui->tableWidget, &QTableWidget::itemClicked, this, &MainWindow::TestSlot);
 }
-void MainWindow::RecChannelName (QString _q_str) 
+void MainWindow::RecChannelName (PacketTS * _packet_ts) 
 {
-  qDebug () << _q_str;
+//pthread_mutex_lock(&mutex_here);
+  QString _q_str =  _packet_ts->name;
+  QTime q_time = QTime::currentTime();
+          
+  qDebug () << _q_str << q_time.toString("hh:mm:ss.zzz") << "main win";
+  
   static int cell_num = 0;
   if (chann_to_num.find (_q_str.toStdString()) == chann_to_num.end())
        chann_to_num[_q_str.toStdString()] = cell_num++;
@@ -66,8 +78,10 @@ void MainWindow::RecChannelName (QString _q_str)
    
   //int num  = item->text().toInt();
   //msg_counter++;
-      
+  pthread_mutex_unlock(&mutex_here);        
   ui->tableWidget->viewport()->update();
+  q_time = QTime::currentTime();
+  qDebug () << _q_str << q_time.toString("hh:mm:ss.zzz") << "main win end";
 }
 
 void MainWindow::TestSlot(QTableWidgetItem *item) 

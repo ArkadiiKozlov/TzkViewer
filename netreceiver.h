@@ -12,14 +12,15 @@ class NetReceiver : public QObject
         explicit NetReceiver(QObject *parent = nullptr);
         
     signals:
-        void SendStringToMain (QString);
+        void SendStringToMain (PacketTS *);
         
     public slots:
         void ReceivePacket (void);
         
     private:
         udp_crtc *udp_o;
-        
+        unsigned char buff_in [2000];
+        PacketTS *ts = (PacketTS*)(buff_in + 42); 
 };
 
 #endif // NETRECEIVER_H
