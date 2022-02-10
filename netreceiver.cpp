@@ -19,11 +19,12 @@ void NetReceiver::ReceivePacket(void)
         memset (buff_in, 0x00, 2000);        
         int size = udp_o->GetPacket((char*)buff_in, 2000000);        
         if (size) {
+            PacketTS *ts =  (PacketTS*)(buff_in + 42);
             if (ts->key == 1) {// key 
                 QString q_str = ts->name;     
-                q_time = q_time.currentTime();
-                qDebug () << q_str << q_time.toString("hh:mm:ss.zzz");                          
-                emit SendStringToMain(ts);
+                q_time = QTime::currentTime();
+                qDebug () << q_str << q_time.toString("hh:mm:ss.zzzzzz");                          
+                emit SendStringToMain(buff_in, size);
                 pthread_mutex_lock(&mutex_here);
                 
             }

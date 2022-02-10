@@ -19,17 +19,18 @@ class MainWindow : public QMainWindow
 {
         Q_OBJECT
     public slots:
-       void RecChannelName (PacketTS *);
+       void RecChannelName (unsigned char *, int);
        void TestSlot (QTableWidgetItem *item);       
         
     public:
         MainWindow(QWidget *parent = nullptr);
         ~MainWindow();
-    private:
-        void ReceivePacket(void);      
+    private:        
+        void FillTzkTable (unsigned char*, int);                
     private:
         Ui::MainWindow *ui;        
         QThread net_rec_thr;        
-        map <string, int> chann_to_num; 
+        map <string, int> chann_to_num;
+        QString looking_channel;
 };
 #endif // MAINWINDOW_H

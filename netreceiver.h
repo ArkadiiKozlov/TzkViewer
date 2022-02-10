@@ -12,7 +12,7 @@ class NetReceiver : public QObject
         explicit NetReceiver(QObject *parent = nullptr);
         
     signals:
-        void SendStringToMain (PacketTS *);
+        void SendStringToMain (unsigned char *, int);
         
     public slots:
         void ReceivePacket (void);
