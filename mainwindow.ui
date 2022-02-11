@@ -80,6 +80,9 @@
       <property name="columnCount">
        <number>16</number>
       </property>
+      <attribute name="horizontalHeaderDefaultSectionSize">
+       <number>85</number>
+      </attribute>
       <row/>
       <row/>
       <row/>

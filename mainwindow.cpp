@@ -85,14 +85,14 @@ void MainWindow::RecChannelName (unsigned char *_packet_ts, int _size)
    
   //int num  = item->text().toInt();
   //msg_counter++;  
-  pthread_mutex_unlock(&mutex_here);        
+  
   if (looking_channel == q_str)  {
        qDebug () << "Channel name is here:"  << q_str << "size: " << QString("%1").arg((ushort)*(packet_ts->name +strlen(packet_ts->name) + 1),0,10) ;
        FillTzkTable(_packet_ts, _size);
        
   }
   ui->tableWidget->viewport()->update();
-  
+  pthread_mutex_unlock(&mutex_here);        
 }
 
 void MainWindow::TestSlot(QTableWidgetItem *item) 
@@ -109,12 +109,14 @@ MainWindow::~MainWindow()
 void MainWindow::FillTzkTable( unsigned char *_buff, int _size)
 {
     PacketTS *packet_ts = (PacketTS*)(_buff + 42);
-    ushort * group = (ushort *) (packet_ts->name + (strlen(packet_ts->name)) + 1 + 2 + 2);
+    qDebug () << "filling:" << packet_ts->name; // QString (packet_ts->name);
+    ushort * group = (ushort *) (packet_ts->name + strlen(packet_ts->name) + 1 + 2 + 2);
     for (int i = 0; i < ui->tableWidget_2->rowCount(); i++) {
         ushort mask = 0x0001;
         for (int j = 0; j < ui->tableWidget_2->columnCount(); j++) {  
-             mask=mask<<j;
-             if (mask && *group)
+             mask=0x0001<<j;
+             qDebug () << mask << *group << (mask & *group);
+             if (mask & *group)
                   ui->tableWidget_2->item (i, j)->setText ("1");
              else
                   ui->tableWidget_2->item (i, j)->setText ("0");
