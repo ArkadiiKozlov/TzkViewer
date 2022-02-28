@@ -14,7 +14,7 @@ MainWindow::MainWindow(QWidget *parent)
     , ui(new Ui::MainWindow)
 {
     ui->setupUi(this);        
-    
+    ui->tabWidget->setTabText(0, "Channels:");
     QTableWidgetItem *item_t;
     for (int i = 0; i < ui->tableWidget->rowCount(); i++) {
         for (int j = 0; j < ui->tableWidget->columnCount(); j++) {
@@ -87,6 +87,7 @@ void MainWindow::RecChannelName (unsigned char *_packet_ts, int _size)
   //msg_counter++;  
   
   if (looking_channel == q_str)  {
+       ui->tabWidget->setTabText(1, q_str);
        qDebug () << "Channel name is here:"  << q_str << "size: " << QString("%1").arg((ushort)*(packet_ts->name +strlen(packet_ts->name) + 1),0,10) ;
        FillTzkTable(_packet_ts, _size);
        
@@ -114,12 +115,19 @@ void MainWindow::FillTzkTable( unsigned char *_buff, int _size)
     for (int i = 0; i < ui->tableWidget_2->rowCount(); i++) {
         ushort mask = 0x0001;
         for (int j = 0; j < ui->tableWidget_2->columnCount(); j++) {  
-             mask=0x0001<<j;
+             mask = 0x0001<<j;
              qDebug () << mask << *group << (mask & *group);
-             if (mask & *group)
-                  ui->tableWidget_2->item (i, j)->setText ("1");
-             else
-                  ui->tableWidget_2->item (i, j)->setText ("0");
+             if (mask & *group) 
+                 ui->tableWidget_2->item (i, j)->setText ("1");                         
+             else 
+                 ui->tableWidget_2->item (i, j)->setText ("0");                                           
+             if (j < 8)                 
+                 if (mask & *group) 
+                     ui->tableWidget_2->item (i, j)->setBackgroundColor(Qt::green);                          
+                 else 
+                     ui->tableWidget_2->item (i, j)->setBackgroundColor(Qt::gray);             
+             else 
+                 ui->tableWidget_2->item (i, j)->setBackgroundColor(Qt::yellow);
         }
         group++;
     }

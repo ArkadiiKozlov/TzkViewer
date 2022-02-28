@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1412</width>
+    <width>1062</width>
     <height>600</height>
    </rect>
   </property>
@@ -19,12 +19,12 @@
      <rect>
       <x>0</x>
       <y>0</y>
-      <width>1401</width>
+      <width>1051</width>
       <height>541</height>
      </rect>
     </property>
     <property name="currentIndex">
-     <number>1</number>
+     <number>0</number>
     </property>
     <widget class="QWidget" name="tab">
      <attribute name="title">
@@ -35,7 +35,7 @@
        <rect>
         <x>10</x>
         <y>10</y>
-        <width>1381</width>
+        <width>1031</width>
         <height>471</height>
        </rect>
       </property>
@@ -43,7 +43,7 @@
        <number>7</number>
       </property>
       <property name="columnCount">
-       <number>4</number>
+       <number>3</number>
       </property>
       <attribute name="horizontalHeaderMinimumSectionSize">
        <number>83</number>
@@ -67,7 +67,6 @@
       <column/>
       <column/>
       <column/>
-      <column/>
      </widget>
     </widget>
     <widget class="QWidget" name="tab_2">
@@ -79,7 +78,7 @@
        <rect>
         <x>10</x>
         <y>10</y>
-        <width>1371</width>
+        <width>1361</width>
         <height>471</height>
        </rect>
       </property>
@@ -90,10 +89,10 @@
        <number>16</number>
       </property>
       <attribute name="horizontalHeaderMinimumSectionSize">
-       <number>83</number>
+       <number>63</number>
       </attribute>
       <attribute name="horizontalHeaderDefaultSectionSize">
-       <number>83</number>
+       <number>63</number>
       </attribute>
       <attribute name="verticalHeaderMinimumSectionSize">
        <number>50</number>
@@ -134,7 +133,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>1412</width>
+     <width>1062</width>
      <height>30</height>
     </rect>
    </property>
