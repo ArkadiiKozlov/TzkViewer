@@ -13,7 +13,8 @@ MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
     , ui(new Ui::MainWindow)
 {
-    ui->setupUi(this);        
+    ui->setupUi(this); 
+    setWindowTitle("TzkViewer");       
     ui->tabWidget->setTabText(0, "Channels:");
     QTableWidgetItem *item_t;
     for (int i = 0; i < ui->tableWidget->rowCount(); i++) {
@@ -45,7 +46,8 @@ void MainWindow::RecChannelName (unsigned char *_packet_ts, int _size)
   PacketTS *packet_ts =  (PacketTS*)(_packet_ts + 42);
   QString q_str =  packet_ts->name;  
   QTime q_time = QTime::currentTime();
-          
+  //static uint i_row = 0, j_column = 0;        
+  
   //qDebug () << _q_str << q_time.toString("hh:mm:ss.zzzzzz") << "main win";
   
   static int cell_num = 0;
@@ -59,7 +61,29 @@ void MainWindow::RecChannelName (unsigned char *_packet_ts, int _size)
         item1->setText(item2->text());
   }
  */
- 
+  uint i_row = chann_to_num[q_str.toStdString()]/3;
+  uint j_column = chann_to_num[q_str.toStdString()]%3;
+  if (cell_num > ui->tableWidget->rowCount() * ui->tableWidget->columnCount()) {
+      ui->tableWidget->setRowCount(ui->tableWidget->rowCount() + 1);
+      QTableWidgetItem *item_t = new QTableWidgetItem (7);
+      item_t->setBackgroundColor(Qt::gray);
+      //item_t->setText(q_str);
+      ui->tableWidget->setItem(ui->tableWidget->rowCount()-1, 0, item_t);
+  
+      item_t = new QTableWidgetItem (7);
+      item_t->setBackgroundColor(Qt::gray);
+      //item_t->setText(q_str);
+      ui->tableWidget->setItem(ui->tableWidget->rowCount()-1, 1, item_t);
+      
+      item_t = new QTableWidgetItem (7);
+      item_t->setBackgroundColor(Qt::gray);
+      //item_t->setText(q_str);
+      ui->tableWidget->setItem(ui->tableWidget->rowCount()-1, 2, item_t);
+  }
+  
+  ui->tableWidget->item(i_row, j_column)->setText(q_str);
+  
+  /*
   if (chann_to_num[q_str.toStdString()] < ui->tableWidget->rowCount()) {
       QTableWidgetItem *item = ui->tableWidget->item(chann_to_num[q_str.toStdString()], 0);
       //item->setData(Qt::EditRole, _q_str);
@@ -80,7 +104,7 @@ void MainWindow::RecChannelName (unsigned char *_packet_ts, int _size)
       item_t->setBackgroundColor(Qt::gray);
       ui->tableWidget->setItem(ui->tableWidget->rowCount()-1,1, item_t);
   }
-  
+  */
   
    
   //int num  = item->text().toInt();
